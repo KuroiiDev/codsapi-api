@@ -13,11 +13,17 @@ const app = express();
 // defining port
 const PORT = process.env.PORT || 3000;
 
-// middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// logging for all requests
+app.use((req, res, next) => {
+    console.log(`${Date.now()} - ${req.method} ${req.path}`);
+    next();
+});
 
 // start server
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+app.get("/", (req, res) => {
+    res.send("Hello World!");
 });
